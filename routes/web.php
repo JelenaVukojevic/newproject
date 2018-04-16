@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\LoginController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +15,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+Route::get('/home', 'HomeController@index')->middleware('auth');
+
+Route::get('/login', ['as' => 'login', 'uses' => 'Auth\LoginController@create']);
+
+Route::post('/login', ['as' => 'login', 'uses' => 'Auth\LoginController@store']);
+
+Route::get('/logout', 'Auth\LoginController@logout');
