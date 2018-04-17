@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layout.master')
 
 @section('title')
     Sign up
@@ -48,3 +48,15 @@
     </div>
 
 </form>
+
+@if (count($errors->all()) > 0)
+    @foreach($errors->all() as $error)
+        <div class="form-group">
+            <div class="alert alert-danger">
+                <li>{{ $error }}</li>
+            </div>
+        </div>
+    @endforeach
+@endif
+
+@endsection

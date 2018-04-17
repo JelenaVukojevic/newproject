@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layout.master')
 
 @section('title')
     Login
@@ -38,3 +38,5 @@
         </div>
     @endforeach
 @endif
+
+@endsection
