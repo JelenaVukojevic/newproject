@@ -8,6 +8,8 @@
 
 <h2>Login</h2>
 
+<p>Or <a href="/register">sign up</a></p>
+
 <form method="POST" action="/login">
 
     {{ csrf_field() }}
