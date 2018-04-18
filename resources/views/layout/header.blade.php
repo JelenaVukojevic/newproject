@@ -1,6 +1,6 @@
     <nav class="navbar navbar-expand-lg">
         <ul class="navbar-nav">
-            <li class="nav-item align-self-center">
+            <li class="nav-item">
                 <h1 class="nav-link">my app</h1>
             </li>
             @if (Auth::check())
