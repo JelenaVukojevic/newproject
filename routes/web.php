@@ -23,7 +23,7 @@ Route::get('/login', ['as' => 'login', 'uses' => 'Auth\LoginController@create'])
 
 Route::post('/login', ['as' => 'login', 'uses' => 'Auth\LoginController@store']);
 
-Route::get('/logout', 'Auth\LoginController@logout');
+Route::get('/logout', 'Auth\LoginController@logout')->middleware('auth');
 
 Route::get('/register', 'Auth\RegisterController@create');
 
