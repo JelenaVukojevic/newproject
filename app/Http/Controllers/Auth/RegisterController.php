@@ -54,7 +54,7 @@ class RegisterController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'company' => 'required',
-            'country' => 'required',
+            'country' => 'required | exists:countries',
             'email' => 'email | required | unique:users',
             'password' => 'required | min:6 | confirmed'
         ]);
