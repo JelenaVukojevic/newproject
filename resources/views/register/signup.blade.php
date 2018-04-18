@@ -27,7 +27,7 @@
         <label for="country">Country</label>
         <select name="country" id="country">
             @foreach ($countries as $country)
-                <option >{{ $country }}</option>
+                <option >{{ $country->name }}</option>
             @endforeach  
         </select>
     </div>

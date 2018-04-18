@@ -44,7 +44,7 @@ class RegisterController extends Controller
 
     protected function create()
     {
-        $countries = Country::getCountries();
+        $countries = Country::all();
         return view('register.signup', compact('countries'));
     }
 
@@ -55,7 +55,7 @@ class RegisterController extends Controller
             'last_name' => 'required',
             'company' => 'required',
             'country' => 'required',
-            'email' => 'email | required | unique',
+            'email' => 'email | required | unique:users',
             'password' => 'required | min:6 | confirmed'
         ]);
 
