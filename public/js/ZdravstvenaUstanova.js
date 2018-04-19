@@ -9,11 +9,12 @@ class Doctor extends Person {
     constructor(first_name, last_name, speciality) {
         super(first_name, last_name);
         this.speciality = speciality;
+        ActivityLog.logCreateDoctor(this);
     }
 
-    bookLabTest(test) {
-        console.log('Doctor ' + this.last_name + ' booked a test ' + test.type + 
-        + ', for patient ' + test.patient.first_name + ' ' + test.patient.last_name);
+    bookLabTest(test, patient) {
+        console.log('Doctor ' + this.last_name + ' booked a test: ' + test.type 
+        + ', for patient ' + patient.first_name + ' ' + patient.last_name);
     }
 }
 
@@ -22,11 +23,13 @@ class Patient extends Person {
         super(first_name, last_name);
         this.jmbg = jmbg;
         this.chart_number = this.chart_number;
+        ActivityLog.logCreatePatient(this);
     }
 
     chooseDoctor(doctor) {
         console.log('Patient ' + this.first_name + ' ' + this.last_name + 
         ' chose doctor ' + doctor.last_name + ' as personal doctor.');
+        ActivityLog.logChooseDoctor(this, doctor);
     }
 }
 
@@ -49,7 +52,8 @@ class BloodPresure extends LabTest {
         this.puls = 60;
     }
 
-    getTestResults() {
+    getTestResults(patient) {
+        ActivityLog.logLabTest(this, patient);
         console.log('Results: blood presure is: ' + this.systolic + '/' + this.diastolic
         + ', puls is: ' + this.puls);
     }
@@ -59,10 +63,11 @@ class BloodSugar extends LabTest {
     constructor(time, date, type, patient, value, last_meal) {
         super(time, date, 'Blood sugar', patient);
         this.value = 8;
-        this.last_meal = '8:00';
+        this.last_meal = '8:00';   
     }
 
-    getTestResults() {
+    getTestResults(patient) {
+        ActivityLog.logLabTest(this, patient);
         console.log('Results: blood sugar is: ' + this.value
         + ', time of last meal is: ' + this.last_meal);
     }
@@ -75,15 +80,42 @@ class CholesterolLevel extends LabTest {
         this.last_meal = '9:00';
     }
 
-    getTestResults() {
+    getTestResults(patient) {
+        ActivityLog.logLabTest(this, patient);
         console.log('Results: cholesterol level is: ' + this.value
         + ', time of last meal is: ' + this.last_meal);
     } 
 }
 
+class ActivityLog {
+    static logCreateDoctor(doctor) {
+        console.log('[' + new Date(Date.now()).toLocaleString() + 
+        '] created doctor ' + doctor.first_name + ' ' + doctor.last_name);
+    }
+
+    static logCreatePatient(patient) {
+        console.log('[' + new Date(Date.now()).toLocaleString() + 
+        '] created doctor ' + patient.first_name + ' ' + patient.last_name);
+    }
+
+    static logChooseDoctor(patient, doctor) {
+        console.log('[' + new Date(Date.now()).toLocaleString() + 
+        '] patient ' + patient.first_name + ' ' + patient.last_name +
+        ' chose doctor dr ' + ' ' + doctor.last_name);
+    }
+
+    static logLabTest(test, patient) {
+        console.log('[' + new Date(Date.now()).toLocaleString() + 
+        '] patient ' + patient.first_name + ' ' + patient.last_name +
+        ' had ' + test.type + ' test.');
+    }
+}
+
 var drMilan = new Doctor('Milan', 'Milankovic', 'Cardiologist');
 var Dragan = new Patient('Dragan', 'Draganovic', '2457895218', '2558');
+Dragan.chooseDoctor(drMilan);
+
 var labTest1 = new BloodSugar('12:30', '18.04.2018', Dragan);
 
-Dragan.chooseDoctor(drMilan);
-drMilan.bookLabTest(labTest1);
+drMilan.bookLabTest(labTest1, Dragan);
+labTest1.getTestResults(Dragan);
